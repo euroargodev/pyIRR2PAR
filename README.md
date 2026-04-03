@@ -13,6 +13,7 @@ The purpose of this Python code is to provide a wrapper for the two models evalu
 
 # How to use this package
 JTan_PAR_results, JPitarch_PAR_results, mean_PAR, mean_uncertainty = IRR2PAR(Ed, depth)
+
 Parameters:
     Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
     z  -- depth
