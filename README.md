@@ -18,10 +18,10 @@ Parameters:
     Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
     z  -- depth
 
-    Returns:
-        - Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
-        - mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
-        - mean_uncertainty : vector of uncertainties
+Returns:
+    - Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
+    - mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
+    - mean_uncertainty : vector of uncertainties
 
 # Bibliography
 We would like to warmly thank Jaime Pitarch and Jing Tan for their work and for making their code available to the community.
