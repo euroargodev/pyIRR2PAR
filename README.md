@@ -16,12 +16,14 @@ JTan_PAR_results, JPitarch_PAR_results, mean_PAR, mean_uncertainty = IRR2PAR(Ed,
 
 Parameters:
 * Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
-* z  -- depth
+* z  -- depth in dbar
 
 Returns:
 * Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
-* mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
+* mean_PAR : Vector of the average PAR values from both models (excluding NA/NaN values). This is the PAR value recommended under the Argo framework.
 * mean_uncertainty : vector of uncertainties
+
+All PAR values are in microMoleQuanta/m^2/sec
 
 # Bibliography
 We would like to warmly thank Jaime Pitarch and Jing Tan for their work and for making their code available to the community.
