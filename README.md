@@ -15,13 +15,13 @@ The purpose of this Python code is to provide a wrapper for the two models evalu
 JTan_PAR_results, JPitarch_PAR_results, mean_PAR, mean_uncertainty = IRR2PAR(Ed, depth)
 
 Parameters:
-    Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
-    z  -- depth
+    * Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
+    * z  -- depth
 
 Returns:
-    - Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
-    - mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
-    - mean_uncertainty : vector of uncertainties
+    * Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
+    * mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
+    * mean_uncertainty : vector of uncertainties
 
 # Bibliography
 We would like to warmly thank Jaime Pitarch and Jing Tan for their work and for making their code available to the community.
