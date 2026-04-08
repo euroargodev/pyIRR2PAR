@@ -16,19 +16,22 @@ def IRR2PAR(Ed, z):
 
     Returns two separate lists for each model's results, and a vector of the mean between mean_par and PAR (excluding NA/NaN values).
 
-    Parameters:
+    Parameters
+    ----------
     Ed -- 2D array with columns [Ed380, Ed443, Ed490, Ed555] in W/m2/nm
     z  -- depth
 
-    Returns:
-        - Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
+    Returns
+    -------
+    Tan_Results, Pitarch_Results, mean_PAR, mean_uncertainty
+        - Tan_Results and Pitarch_Results are dictionaries with both methods outputs, best estimate is under the 'PAR' key and uncertainty under 'error'
         - mean_PAR : vector of the mean between mean_par and PAR (excluding NA/NaN values)
-        - mean_uncertainty : vector of uncertainties
+        - mean_uncertainty : vector of uncertainties (following Low of Propagation of Uncertainties assuming full correlation)
 
     """
     # Call JTan_PAR_from_Ed from JTan_2025 with input in uW/Cm2
     JTan_PAR, JTan_e = JTan_PAR_from_Ed(np.column_stack((100 * Ed, z)))
-    JTan_PAR_results = [JTan_PAR, JTan_e]
+    Tan_Results = {'PAR': JTan_PAR, 'error': JTan_e}
 
     # Remove negative values for JPitarch_2025
     Ed[Ed < 0] = np.nan
@@ -50,13 +53,12 @@ def IRR2PAR(Ed, z):
     # uncertainties
     # Convert IQR_ep to absolute uncertainty
     JPitarch_e = JPitarch_PAR * (JPitarch_IQR_ep / 100)
-    JPitarch_PAR_results = [
-        JPitarch_PAR,
-        JPitarch_PAR_b,
-        JPitarch_ep50,
-        JPitarch_IQR_ep,
-        JPitarch_e,
-    ]
+    Pitarch_Results = {'PAR': JPitarch_PAR, # Best PAR
+                       'PARb': JPitarch_PAR_b, # PAR with some remaining biases to be corrected with ep50.
+                       'ep50': JPitarch_ep50, # Estimated median percent error of the output value, as a function of depth.
+                       'IQR': JPitarch_IQR_ep, # Estimated interquartile range of the percent error of the output value, as a function of depth.
+                       'error': JPitarch_e, # Error estimate
+                       }
 
     # Calculate mean_uncertainty based on NaN conditions
     mean_uncertainty = np.where(
@@ -75,4 +77,4 @@ def IRR2PAR(Ed, z):
         ),
     )
 
-    return JTan_PAR_results, JPitarch_PAR_results, mean_PAR, mean_uncertainty
+    return Tan_Results, Pitarch_Results, mean_PAR, mean_uncertainty

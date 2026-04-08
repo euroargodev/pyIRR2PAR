@@ -28,7 +28,8 @@ Parameters:
 * z  -- depth in dbar
 
 Returns:
-* Two lists: first for JTan_2025 results, second for JPitarch_2025 results,
+* JTan_PAR_results dictionary for Tan et al, 2025 results, 
+* JPitarch_PAR_results dictionary for Pitarch et al, 2025 results,
 * mean_PAR : Vector of the average PAR values from both models (excluding NA/NaN values). This is the PAR value recommended under the Argo framework.
 * mean_uncertainty : vector of uncertainties
 ```
@@ -69,11 +70,12 @@ par = df['RamsesPAR'] # Measured PAR (micro E/m2/s)
 profile = df[['Ed_380', 'Ed_443', 'Ed_490', 'Ed_555']].to_numpy()
 JTan_PAR_results, JPitarch_PAR_results, mean_PAR, mean_uncertainty = IRR2PAR(profile, df['depth'])
 
+# Some plots:
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 12), dpi=90, layout="constrained", sharey=True)
 fig.suptitle('1902685-lovuse023b-cycle12',fontsize=16)
 
-ax1.plot(JTan_PAR_results[0], d, 'b', label='modeled (Tan et al, 2025)')
-ax1.plot(JPitarch_PAR_results[0], d, 'c', label='modeled (Pitarch et al, 2025)')
+ax1.plot(JTan_PAR_results['PAR'], d, 'b', label='modeled (Tan et al, 2025)')
+ax1.plot(JPitarch_PAR_results['PAR'], d, 'c', label='modeled (Pitarch et al, 2025)')
 ax1.plot(mean_PAR, d, 'k', label='modeled (IRR2PAR)')
 ax1.plot(par, d, 'r',label='measured')
 ax1.set_ylabel('Depth, m',fontsize=14)
@@ -83,8 +85,8 @@ ax1.legend(fontsize=12)
 ax1.yaxis.set_inverted(True)
 ax1.grid()
 
-ax2.plot(JTan_PAR_results[1], d, 'b', label='modeled (Tan et al, 2025)')
-ax2.plot(JPitarch_PAR_results[1], d, 'c', label='modeled (Pitarch et al, 2025)')
+ax2.plot(JTan_PAR_results['error'], d, 'b', label='modeled (Tan et al, 2025)')
+ax2.plot(JPitarch_PAR_results['error'], d, 'c', label='modeled (Pitarch et al, 2025)')
 ax2.plot(mean_uncertainty, d, 'k', label='modeled (IRR2PAR)')
 ax2.set_xlabel(r'$\Delta$'+'PAR, '+r'$\mu$E/m$^{2}$/s',fontsize=14)
 ax2.set_xscale('log')
